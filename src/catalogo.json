@@ -1,0 +1,990 @@
+[
+ {
+  "area": "Aduana principal",
+  "items": [
+   {
+    "clasificacion": "Lavado de manos",
+    "lineamiento": "Tiene los insumos suficientes (cubrebocas, cofias, agua, jabón, gel antibacterial y papel toalla)"
+   },
+   {
+    "clasificacion": "Lavado de manos",
+    "lineamiento": "Personal se lava las manos correctamente al entrar"
+   },
+   {
+    "clasificacion": "Lavado de manos",
+    "lineamiento": "Puertas cerradas y en buen estado"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se cuenta con despachadores para el lavado y sanitizado de manos en buen estado e identificados"
+   }
+  ]
+ },
+ {
+  "area": "Aduana reempaque",
+  "items": [
+   {
+    "clasificacion": "Lavado de manos",
+    "lineamiento": "Tiene los insumos suficientes (cubrebocas, cofias, agua, jabón, gel antibacterial y papel toalla)"
+   },
+   {
+    "clasificacion": "Lavado de manos",
+    "lineamiento": "Personal se lava las manos correctamente al entrar"
+   },
+   {
+    "clasificacion": "Lavado de manos",
+    "lineamiento": "Puertas cerradas y en buen estado"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se cuenta con despachadores para el lavado y sanitizado de manos en buen estado e identificados"
+   }
+  ]
+ },
+ {
+  "area": "Andenes",
+  "items": [
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal porta su cofia y cubrebocas correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal con barba porta el cubrebarba correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no porta artículos personales accesorios/ joyería ni adornos en manos, cara incluyendo boca y lengua, orejas, cuello o cabeza como aretes, audífonos, piercings, cadenas, reloj, etc."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no introduce alimentos y solo se permite el uso de botellas transparentes para tomar agua."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal usa zapato de seguridad o en su caso chancletas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no ingresa medicamentos."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presenta con uñas recortadas, limpias y sin esmalte."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presentarse aseado al área de trabajo, con ropa y calzado limpios."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no estornuda o tose sobre los productos y/o materiales. No escupe en las áreas operativas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se observan objetos punzocortantes en buen estado y controlados. No se observan vidrios, lámparas, micas u otro material quebrado o en malas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "No se observan químicos sin identificar. Se observan resguardados correctamente y en buenas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Las tarimas están libres de astillas, componentes faltantes o en posición inadecuada, clavos expuestos, contaminación por químicos o evidencia de plagas."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "No existe evidencia de actividad de plagas."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "Las lámparas de luz para insectos se encuentran funcionando."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "Las trampas mecánicas libres de obstrucciones que eviten su revisión periódica o su correcto funcionamiento."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "Todas las trampas se encuentran en buen estado, sin daño ocasionado por el personal del almacén."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Sellos de cortinas y rampas de andén en buen estado y funcionales."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Todas las puertas, cortinas y accesos están cerrados para evitar la entrada de polvo, lluvia o fauna nociva cuando no están en uso. Sin aperturas o huecos hacia el exterior."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observa presencia de condensados y/o escurrimientos de agua en techos y paredes."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observan arreglos temporales (amarres con playo, cintas, etc.)"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores se encuentran en buen estado. El techo esta libre de goteras."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El piso y las paredes se encuentra en buen estado, libre de hoyos y grietas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las instalaciones cuentan con iluminación adecuada para realizar sus actividades. Las lámparas se encuentran con protección y funcionando correctamente."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan tarimas vacías y fuera del lugar asignado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los contenedores de basura se encuentran limpios, libres de olor y es retirada frecuentemente la basura de las áreas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Producto o material de empaque se observa limpio, emplayado (cuando aplique) y en buen estado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Tarimas que contienen producto se observan en buenas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el área limpia y sin restos de basura o pedazos de tarimas en piso."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan etiquetas de lotificado sueltas o en malas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan pisos y paredes limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No hay evidencia de derrame de líquidos  y/o cualquier otro contaminante."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se colocan a nivel piso productos como cajas de producto y/o materiales."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los patines y montacargas se encuentran limpios, en buenas condiciones y en su  área asignada cuando no están en uso operativo"
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan utensilios de limpieza solo en las áreas asignadas. Se utilizan de acuerdo al código de colores."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el producto cerrado, libre de polvo y las cajas en buen estado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Todo el producto se encuentra plenamente identificado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El personal no se sienta o caminar sobre estos."
+   }
+  ]
+ },
+ {
+  "area": "Cámara 2A",
+  "items": [
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal porta su cofia y cubrebocas correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal con barba porta el cubrebarba correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no porta artículos personales accesorios/ joyería ni adornos en manos, cara incluyendo boca y lengua, orejas, cuello o cabeza como aretes, audífonos, piercings, cadenas, reloj, etc."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no introduce alimentos y solo se permite el uso de botellas transparentes para tomar agua."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal usa zapato de seguridad o en su caso chancletas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no ingresa medicamentos."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presenta con uñas recortadas, limpias y sin esmalte."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presentarse aseado al área de trabajo, con ropa y calzado limpios."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no estornuda o tose sobre los productos y/o materiales. No escupe en las áreas operativas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se observan objetos punzocortantes en buen estado y controlados. No se observan vidrios, lámparas, micas u otro material quebrado o en malas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "No se observan químicos sin identificar. Se observan resguardados correctamente y en buenas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Las tarimas sin producto están libres de astillas, componentes faltantes o en posición inadecuada, clavos expuestos, contaminación por químicos o evidencia de plagas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Están limpios los tambos de merma, además de que se vacían y lavan con frecuencia."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "No existe evidencia de actividad de plagas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Sin aperturas o huecos hacia el exterior."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan hawaianas en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observa presencia de condensados y/o escurrimientos de agua en techos y paredes."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan racks y estructuras (tuberías, canaletas, canastillas, etc.) limpias."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observan arreglos temporales (amarres con playo, cintas, etc.)"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores se encuentran en buen estado. El techo esta libre de goteras."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El piso y las paredes se encuentra en buen estado, libre de hoyos y grietas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las instalaciones cuentan con iluminación adecuada para realizar sus actividades. Las lámparas se encuentran con protección."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores/techos están libres de pintura descarapelada, exceso de polvo, suciedad, etc."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan tarimas vacías y fuera del lugar asignado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los contenedores de basura se encuentran limpios, libres de olor y es retirada frecuentemente la basura de las áreas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el producto y/o material de empaque cerrado, libre de polvo y las cajas en buen estado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Tarimas que contienen producto se observan en buenas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el área limpia y sin restos de basura o pedazos de tarimas en piso."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan etiquetas de lotificado sueltas o en malas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan pisos y paredes limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Área libre de basura o materiales ajenos a la misma. Sin presencia de olores desagradables."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No hay evidencia de derrame de líquidos  y/o cualquier otro contaminante."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se colocan a nivel piso productos como cajas de producto y/o materiales."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El área de Merma se observa limpia, ordenada y sin escurrimientos en tambos y básculas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los patines y montacargas se encuentran limpios, en buenas condiciones y en su  área asignada cuando no están en uso operativo"
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Las tarimas de producto terminado/ materia prima están colocadas de tal forma que exista un espacio entre la pared y las mismas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan utensilios de limpieza solo en las áreas asignadas. Se utilizan de acuerdo al código de colores."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Todo el producto se encuentra plenamente identificado. No se tienen productos mezclados. No se observan etiquetas despegadas o sueltas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se evita almacenar producto entre pasillos y/o en zonas no establecidas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El personal tiene cuidado hacia el producto y materiales. Evita por ejemplo sentarse o caminar sobre estos."
+   }
+  ]
+ },
+ {
+  "area": "Cámara 2B",
+  "items": [
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal porta su cofia y cubrebocas correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal con barba porta el cubrebarba correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no porta artículos personales accesorios/ joyería ni adornos en manos, cara incluyendo boca y lengua, orejas, cuello o cabeza como aretes, audífonos, piercings, cadenas, reloj, etc."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no introduce alimentos y solo se permite el uso de botellas transparentes para tomar agua."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal usa zapato de seguridad o en su caso chancletas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no ingresa medicamentos."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presenta con uñas recortadas, limpias y sin esmalte."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presentarse aseado al área de trabajo, con ropa y calzado limpios."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no estornuda o tose sobre los productos y/o materiales. No escupe en las áreas operativas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se observan objetos punzocortantes en buen estado y controlados. No se observan vidrios, lámparas, micas u otro material quebrado o en malas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "No se observan químicos sin identificar. Se observan resguardados correctamente y en buenas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Las tarimas sin producto están libres de astillas, componentes faltantes o en posición inadecuada, clavos expuestos, contaminación por químicos o evidencia de plagas."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "No existe evidencia de actividad de plagas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Sin aperturas o huecos hacia el exterior."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan hawaianas en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observa presencia de condensados y/o escurrimientos de agua en techos y paredes."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan racks y estructuras (tuberías, canaletas, canastillas, etc.) limpias."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observan arreglos temporales (amarres con playo, cintas, etc.)"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores se encuentran en buen estado. El techo esta libre de goteras."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El piso y las paredes se encuentra en buen estado, libre de hoyos y grietas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las instalaciones cuentan con iluminación adecuada para realizar sus actividades. Las lámparas se encuentran con protección."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores/techos están libres de pintura descarapelada, exceso de polvo, suciedad, etc."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan tarimas vacías y fuera del lugar asignado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los contenedores de basura se encuentran limpios, libres de olor y es retirada frecuentemente la basura de las áreas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el producto y/o material de empaque cerrado, libre de polvo y las cajas en buen estado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Tarimas que contienen producto se observan en buenas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el área limpia y sin restos de basura o pedazos de tarimas en piso."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan etiquetas de lotificado sueltas o en malas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan pisos y paredes limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Área libre de basura o materiales ajenos a la misma. Sin presencia de olores desagradables."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No hay evidencia de derrame de líquidos  y/o cualquier otro contaminante."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se colocan a nivel piso productos como cajas de producto y/o materiales."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los patines y montacargas se encuentran limpios, en buenas condiciones y en su  área asignada cuando no están en uso operativo"
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Las tarimas de producto terminado/ materia prima están colocadas de tal forma que exista un espacio entre la pared y las mismas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan utensilios de limpieza solo en las áreas asignadas. Se utilizan de acuerdo al código de colores."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Todo el producto se encuentra plenamente identificado. No se tienen productos mezclados. No se observan etiquetas despegadas o sueltas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se evita almacenar producto entre pasillos y/o en zonas no establecidas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El personal tiene cuidado hacia el producto y materiales. Evita por ejemplo sentarse o caminar sobre estos."
+   }
+  ]
+ },
+ {
+  "area": "Cámara 2C",
+  "items": [
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal porta su cofia y cubrebocas correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal con barba porta el cubrebarba correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no porta artículos personales accesorios/ joyería ni adornos en manos, cara incluyendo boca y lengua, orejas, cuello o cabeza como aretes, audífonos, piercings, cadenas, reloj, etc."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no introduce alimentos y solo se permite el uso de botellas transparentes para tomar agua."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal usa zapato de seguridad o en su caso chancletas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no ingresa medicamentos."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presenta con uñas recortadas, limpias y sin esmalte."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presentarse aseado al área de trabajo, con ropa y calzado limpios."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no estornuda o tose sobre los productos y/o materiales. No escupe en las áreas operativas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se observan objetos punzocortantes en buen estado y controlados. No se observan vidrios, lámparas, micas u otro material quebrado o en malas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "No se observan químicos sin identificar. Se observan resguardados correctamente y en buenas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Las tarimas sin producto están libres de astillas, componentes faltantes o en posición inadecuada, clavos expuestos, contaminación por químicos o evidencia de plagas."
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "No existe evidencia de actividad de plagas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Sin aperturas o huecos hacia el exterior."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan hawaianas en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observa presencia de condensados y/o escurrimientos de agua en techos y paredes."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan racks y estructuras (tuberías, canaletas, canastillas, etc.) limpias."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observan arreglos temporales (amarres con playo, cintas, etc.)"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores se encuentran en buen estado. El techo esta libre de goteras."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El piso y las paredes se encuentra en buen estado, libre de hoyos y grietas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las instalaciones cuentan con iluminación adecuada para realizar sus actividades. Las lámparas se encuentran con protección."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores/techos están libres de pintura descarapelada, exceso de polvo, suciedad, etc."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan tarimas vacías y fuera del lugar asignado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los contenedores de basura se encuentran limpios, libres de olor y es retirada frecuentemente la basura de las áreas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el producto y/o material de empaque cerrado, libre de polvo y las cajas en buen estado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Tarimas que contienen producto se observan en buenas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el área limpia y sin restos de basura o pedazos de tarimas en piso."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan etiquetas de lotificado sueltas o en malas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan pisos y paredes limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Área libre de basura o materiales ajenos a la misma. Sin presencia de olores desagradables."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No hay evidencia de derrame de líquidos  y/o cualquier otro contaminante."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se colocan a nivel piso productos como cajas de producto y/o materiales."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los patines y montacargas se encuentran limpios, en buenas condiciones y en su  área asignada cuando no están en uso operativo"
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Las tarimas de producto terminado/ materia prima están colocadas de tal forma que exista un espacio entre la pared y las mismas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan utensilios de limpieza solo en las áreas asignadas. Se utilizan de acuerdo al código de colores."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Todo el producto se encuentra plenamente identificado. No se tienen productos mezclados. No se observan etiquetas despegadas o sueltas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se evita almacenar producto entre pasillos y/o en zonas no establecidas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El personal tiene cuidado hacia el producto y materiales. Evita por ejemplo sentarse o caminar sobre estos."
+   }
+  ]
+ },
+ {
+  "area": "Reempaque",
+  "items": [
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal porta su cofia y cubrebocas correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal con barba porta el cubrebarba correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no porta artículos personales accesorios/ joyería ni adornos en manos, cara incluyendo boca y lengua, orejas, cuello o cabeza como aretes, audífonos, piercings, cadenas, reloj, etc."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no introduce alimentos y solo se permite el uso de botellas transparentes para tomar agua."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal usa zapato de seguridad o en su caso chancletas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no ingresa medicamentos."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presenta con uñas recortadas, limpias y sin esmalte."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presentarse aseado al área de trabajo, con ropa y calzado limpios."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no estornuda o tose sobre los productos y/o materiales. No escupe en las áreas operativas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "El personal se lava y/o sanitiza las manos antes de manipular producto."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se observan objetos punzocortantes en buen estado y controlados. No se observan vidrios, lámparas, micas u otro material quebrado o en malas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "No se observan químicos sin identificar. Se observan resguardados correctamente y en buenas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Las tarimas están libres de astillas, componentes faltantes o en posición inadecuada, clavos expuestos, contaminación por químicos o evidencia de plagas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se respeta el flujo establecido para la entrada de personal y materiales"
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "No existe evidencia de actividad de plagas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Sin aperturas o huecos hacia el exterior."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan hawaianas en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observa presencia de condensados y/o escurrimientos de agua en techos y paredes."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan estructuras (tuberías, canaletas, canastillas, etc.) limpias."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observan arreglos temporales (amarres con playo, cintas, etc.)"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores se encuentran en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El piso y las paredes se encuentra en buen estado, libre de hoyos y grietas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El techo esta libre de goteras."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las instalaciones cuentan con iluminación adecuada para realizar sus actividades. Las lámparas se encuentran con protección."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan tarimas vacías y fuera del lugar asignado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los contenedores de basura se encuentran limpios, libres de olor y es retirada frecuentemente la basura de las áreas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Tarimas que contienen producto se observan en buenas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el área limpia y sin restos de basura o pedazos de tarimas en piso."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan etiquetas de lotificado sueltas o en malas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan pisos y paredes limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan equipos de proceso, básculas y mesas limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Devoluciones de material no utilizado esta identificado y emplayado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No hay evidencia de derrame de líquidos  y/o cualquier otro contaminante."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se colocan a nivel piso productos como cajas de producto y/o materiales."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los patines se encuentran limpios, en buenas condiciones y en su área asignada cuando no están en uso operativo"
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan utensilios de limpieza solo en las áreas asignadas. Se utilizan de acuerdo al código de colores."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Todo el producto se encuentra plenamente identificado. No se tienen productos mezclados. No se observan etiquetas despegadas o sueltas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El personal tiene cuidado hacia el producto y materiales. Evita por ejemplo sentarse o caminar sobre estos."
+   }
+  ]
+ },
+ {
+  "area": "Reempaque chico",
+  "items": [
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal porta su cofia y cubrebocas correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal con barba porta el cubrebarba correctamente"
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no porta artículos personales accesorios/ joyería ni adornos en manos, cara incluyendo boca y lengua, orejas, cuello o cabeza como aretes, audífonos, piercings, cadenas, reloj, etc."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no introduce alimentos y solo se permite el uso de botellas transparentes para tomar agua."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal usa zapato de seguridad o en su caso chancletas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no ingresa medicamentos."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presenta con uñas recortadas, limpias y sin esmalte."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal se presentarse aseado al área de trabajo, con ropa y calzado limpios."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "Personal no estornuda o tose sobre los productos y/o materiales. No escupe en las áreas operativas."
+   },
+   {
+    "clasificacion": "Buenas Prácticas de Higiene",
+    "lineamiento": "El personal se lava y/o sanitiza las manos antes de manipular producto."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se observan objetos punzocortantes en buen estado y controlados. No se observan vidrios, lámparas, micas u otro material quebrado o en malas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "No se observan químicos sin identificar. Se observan resguardados correctamente y en buenas condiciones."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Las tarimas están libres de astillas, componentes faltantes o en posición inadecuada, clavos expuestos, contaminación por químicos o evidencia de plagas."
+   },
+   {
+    "clasificacion": "Control de contaminación cruzada",
+    "lineamiento": "Se respeta el flujo establecido para la entrada de personal y materiales"
+   },
+   {
+    "clasificacion": "Control de plagas",
+    "lineamiento": "No existe evidencia de actividad de plagas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Sin aperturas o huecos hacia el exterior."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan hawaianas en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observa presencia de condensados y/o escurrimientos de agua en techos y paredes."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Se observan estructuras (tuberías, canaletas, canastillas, etc.) limpias."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "No se observan arreglos temporales (amarres con playo, cintas, etc.)"
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las estructuras superiores se encuentran en buen estado."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El piso y las paredes se encuentra en buen estado, libre de hoyos y grietas."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "El techo esta libre de goteras."
+   },
+   {
+    "clasificacion": "Instalaciones",
+    "lineamiento": "Las instalaciones cuentan con iluminación adecuada para realizar sus actividades. Las lámparas se encuentran con protección."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan tarimas vacías y fuera del lugar asignado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los contenedores de basura se encuentran limpios, libres de olor y es retirada frecuentemente la basura de las áreas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Tarimas que contienen producto se observan en buenas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observa el área limpia y sin restos de basura o pedazos de tarimas en piso."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se observan etiquetas de lotificado sueltas o en malas condiciones."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan pisos y paredes limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan equipos de proceso, básculas y mesas limpias."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Devoluciones de material no utilizado esta identificado y emplayado."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No hay evidencia de derrame de líquidos  y/o cualquier otro contaminante."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "No se colocan a nivel piso productos como cajas de producto y/o materiales."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Los patines se encuentran limpios, en buenas condiciones y en su área asignada cuando no están en uso operativo"
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Se observan utensilios de limpieza solo en las áreas asignadas. Se utilizan de acuerdo al código de colores."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "Todo el producto se encuentra plenamente identificado. No se tienen productos mezclados. No se observan etiquetas despegadas o sueltas."
+   },
+   {
+    "clasificacion": "Orden y limpieza en las áreas",
+    "lineamiento": "El personal tiene cuidado hacia el producto y materiales. Evita por ejemplo sentarse o caminar sobre estos."
+   }
+  ]
+ }
+]
