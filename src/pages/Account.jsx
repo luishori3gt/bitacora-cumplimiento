@@ -16,9 +16,22 @@ export default function Account({ session }) {
     setFactors(data?.totp || [])
   }
 
+  async function limpiarPendientes() {
+    // Borra factores sin verificar (intentos de activación a medias)
+    const { data } = await supabase.auth.mfa.listFactors()
+    for (const f of data?.totp || []) {
+      if (f.status !== 'verified') await supabase.auth.mfa.unenroll({ factorId: f.id })
+    }
+  }
+
   async function iniciarEnrolamiento() {
     setErr(''); setMsg('')
-    const { data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp', friendlyName: 'Bitácora 2FA' })
+    let { data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp', friendlyName: 'Bitácora 2FA' })
+    if (error && /already exists/i.test(error.message || '')) {
+      // Quedó un factor pendiente de un intento anterior: limpiar y reintentar
+      await limpiarPendientes()
+      ({ data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp', friendlyName: 'Bitácora 2FA' }))
+    }
     if (error) { setErr(error.message); return }
     const qr = await QRCode.toDataURL(data.totp.url, { width: 220 })
     setEnroll({ id: data.id, qr, secret: data.totp.secret })
@@ -48,12 +61,19 @@ export default function Account({ session }) {
       {err && <div className="error-msg">{err}</div>}
 
       <h3>Factores registrados</h3>
-      {factors.length === 0 && <p style={{ color: 'var(--amber)' }}>⚠️ No tienes 2FA activado. Actívalo para cumplir la política de TI.</p>}
+      {factors.filter(f => f.status === 'verified').length === 0 && (
+        <p style={{ color: 'var(--amber)' }}>⚠️ No tienes 2FA activado. Actívalo para cumplir la política de TI.</p>
+      )}
       <ul>
         {factors.map(f => (
           <li key={f.id} style={{ marginBottom: 8 }}>
-            {f.friendly_name || 'Autenticador'} — <span className="badge ok">activo</span>{' '}
-            <button className="btn small danger" onClick={() => quitar(f.id)}>Desactivar</button>
+            {f.friendly_name || 'Autenticador'} —{' '}
+            {f.status === 'verified'
+              ? <span className="badge ok">activo</span>
+              : <span className="badge warn">pendiente de verificar</span>}{' '}
+            <button className="btn small danger" onClick={() => quitar(f.id)}>
+              {f.status === 'verified' ? 'Desactivar' : 'Descartar'}
+            </button>
           </li>
         ))}
       </ul>
