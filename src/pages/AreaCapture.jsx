@@ -3,6 +3,7 @@ import { supabase, CLOUDINARY, IS_DEMO } from '../supabase.js'
 import { encolarFoto, flushCola, colaTam, onQueueChange } from '../photoQueue.js'
 import Camara from '../components/Camara.jsx'
 import Lightbox from '../components/Lightbox.jsx'
+import { useRef } from 'react'
 
 const MIN_FOTOS = 2
 
@@ -52,6 +53,14 @@ export default function AreaCapture({ go, params }) {
   const [colaN, setColaN] = useState(0)
   const [camara, setCamara] = useState(null) // null | {linId, linTexto}
   const [zoom, setZoom] = useState(null) // {urls:[], idx}
+  const archivoRef = useRef(null) // input de archivos único, controlado por los botones
+  const [archivoTarget, setArchivoTarget] = useState({ linId: null, linTexto: null })
+
+  function abrirSelector(linId = null, linTexto = null) {
+    setArchivoTarget({ linId, linTexto })
+    // pequeño timeout para que el estado se aplique antes de abrir el diálogo
+    setTimeout(() => archivoRef.current?.click(), 0)
+  }
 
   const slug = useMemo(() => area.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'), [area])
 
@@ -110,9 +119,11 @@ export default function AreaCapture({ go, params }) {
     encolarFoto({ dataUrl, bitacoraId, areaId: area.id, linId, areaSlug: slug })
   }
 
-  async function onFotos(e, linId = null, linTexto = null) {
+  async function onArchivos(e) {
     const files = Array.from(e.target.files || [])
+    e.target.value = ''
     if (!files.length) return
+    const { linId, linTexto } = archivoTarget
     setBusy(true); setMsg('')
     try {
       for (const f of files) await procesarFoto(f, linId, linTexto)
@@ -120,7 +131,7 @@ export default function AreaCapture({ go, params }) {
       await load()
       const n = colaTam()
       if (n > 0) setMsg(`⏳ Sin conexión: ${n} foto(s) guardadas en el teléfono. Se subirán automáticamente al regresar el internet.`)
-    } catch (e2) { setMsg('⚠️ ' + e2.message) } finally { setBusy(false); e.target.value = '' }
+    } catch (e2) { setMsg('⚠️ ' + e2.message) } finally { setBusy(false) }
   }
 
   async function onCapturaCamara(blob) {
@@ -181,10 +192,7 @@ export default function AreaCapture({ go, params }) {
         <h3>📷 Fotos generales del área (mínimo {MIN_FOTOS} — obligatorias para cerrar el área)</h3>
         <div className="pill-row" style={{ marginBottom: 8 }}>
           <button className="btn small" onClick={() => setCamara({ linId: null, linTexto: null })} disabled={busy}>📸 Tomar foto con la cámara</button>
-          <label className="btn small secondary" style={{ margin: 0 }}>
-            📎 Subir archivo(s)
-            <input type="file" accept="image/*" capture="environment" multiple hidden onChange={e => onFotos(e)} disabled={busy} />
-          </label>
+          <button className="btn small secondary" onClick={() => abrirSelector()} disabled={busy}>📎 Subir archivo(s)</button>
           {busy && <span className="badge pend">Procesando…</span>}
         </div>
         {colaN > 0 && (
@@ -223,10 +231,10 @@ export default function AreaCapture({ go, params }) {
                     title="Abrir cámara para este punto">
                     📷 Foto{fotosLin.length ? ` (${fotosLin.length})` : ''}
                   </button>
-                  <label className="opt" style={{ fontSize: '.75rem' }} title="O subir desde archivo">
-                    📎
-                    <input type="file" accept="image/*" capture="environment" multiple hidden onChange={e => onFotos(e, l.id, l.texto)} />
-                  </label>
+                  <button className="opt" style={{ fontSize: '.75rem' }} title="Subir desde archivo"
+                    onClick={() => abrirSelector(l.id, l.texto)} disabled={busy}>
+                    📎 Archivo
+                  </button>
                 </div>
                 {fotosLin.length > 0 && (
                   <div className="fotos-grid">
@@ -252,6 +260,8 @@ export default function AreaCapture({ go, params }) {
         </button>
       </div>
       {camara && <Camara onCaptura={onCapturaCamara} onClose={() => setCamara(null)} />}
+      {/* Input único de archivos, disparado por los botones 📎 */}
+      <input ref={archivoRef} type="file" accept="image/*" multiple hidden onChange={onArchivos} />
       <Lightbox srcs={zoom?.urls || []} index={zoom?.idx || 0} onIndex={i => setZoom(z => ({ ...z, idx: i }))} onClose={() => setZoom(null)} />
     </>
   )
