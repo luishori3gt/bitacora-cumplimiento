@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { supabase, CLOUDINARY, IS_DEMO } from '../supabase.js'
 import { encolarFoto, flushCola, colaTam, onQueueChange } from '../photoQueue.js'
+import Camara from '../components/Camara.jsx'
 
 const MIN_FOTOS = 2
 
@@ -44,6 +45,7 @@ export default function AreaCapture({ go, params }) {
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const [colaN, setColaN] = useState(0)
+  const [camara, setCamara] = useState(null) // null | {linId, linTexto}
 
   const slug = useMemo(() => area.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'), [area])
 
@@ -90,28 +92,44 @@ export default function AreaCapture({ go, params }) {
       ), 600)
   }
 
+  // Procesa una foto ya capturada (desde cámara o archivo): comprime, sella y encola
+  async function procesarFoto(blob, linId = null, linTexto = null) {
+    const sello = selloFoto(area.nombre, linTexto)
+    const urlObj = URL.createObjectURL(blob)
+    const comp = await comprimir(urlObj, 1200, 0.75, sello)
+    URL.revokeObjectURL(urlObj)
+    const dataUrl = await new Promise((res, rej) => {
+      const r = new FileReader()
+      r.onload = () => res(r.result); r.onerror = rej
+      r.readAsDataURL(comp)
+    })
+    encolarFoto({ dataUrl, bitacoraId, areaId: area.id, linId, areaSlug: slug })
+  }
+
   async function onFotos(e, linId = null, linTexto = null) {
     const files = Array.from(e.target.files || [])
     if (!files.length) return
     setBusy(true); setMsg('')
-    const sello = selloFoto(area.nombre, linTexto)
     try {
-      for (const f of files) {
-        // Comprimir + sello de fecha/hora UNA VEZ, y encolar.
-        // La subida real la hace la cola (inmediata si hay internet, automática si no).
-        const blob = await comprimir(f, 1200, 0.75, sello)
-        const dataUrl = await new Promise((res, rej) => {
-          const r = new FileReader()
-          r.onload = () => res(r.result); r.onerror = rej
-          r.readAsDataURL(blob)
-        })
-        encolarFoto({ dataUrl, bitacoraId, areaId: area.id, linId, areaSlug: slug })
-      }
+      for (const f of files) await procesarFoto(f, linId, linTexto)
       await flushCola()
       await load()
       const n = colaTam()
       if (n > 0) setMsg(`⏳ Sin conexión: ${n} foto(s) guardadas en el teléfono. Se subirán automáticamente al regresar el internet.`)
     } catch (e2) { setMsg('⚠️ ' + e2.message) } finally { setBusy(false); e.target.value = '' }
+  }
+
+  async function onCapturaCamara(blob) {
+    const { linId, linTexto } = camara || {}
+    setCamara(null)
+    setBusy(true); setMsg('')
+    try {
+      await procesarFoto(blob, linId, linTexto)
+      await flushCola()
+      await load()
+      const n = colaTam()
+      if (n > 0) setMsg(`⏳ Sin conexión: ${n} foto(s) en cola. Se subirán automáticamente al regresar el internet.`)
+    } catch (e2) { setMsg('⚠️ ' + e2.message) } finally { setBusy(false) }
   }
 
   async function borrarFoto(f) {
@@ -157,9 +175,16 @@ export default function AreaCapture({ go, params }) {
 
       <div className="card">
         <h3>📷 Fotos generales del área (mínimo {MIN_FOTOS} — obligatorias para cerrar el área)</h3>
-        <input type="file" accept="image/*" capture="environment" multiple onChange={e => onFotos(e)} disabled={busy} />
+        <div className="pill-row" style={{ marginBottom: 8 }}>
+          <button className="btn small" onClick={() => setCamara({ linId: null, linTexto: null })} disabled={busy}>📸 Tomar foto con la cámara</button>
+          <label className="btn small secondary" style={{ margin: 0 }}>
+            📎 Subir archivo(s)
+            <input type="file" accept="image/*" capture="environment" multiple hidden onChange={e => onFotos(e)} disabled={busy} />
+          </label>
+          {busy && <span className="badge pend">Procesando…</span>}
+        </div>
         {colaN > 0 && (
-          <div className="pill-row" style={{ marginTop: 8 }}>
+          <div className="pill-row">
             <span className="badge warn">⏳ {colaN} foto(s) en cola por subir (se envían solas al haber internet)</span>
             <button className="btn small secondary" onClick={async () => { setBusy(true); await flushCola(); await load(); setBusy(false) }}>Reintentar ahora</button>
           </div>
@@ -188,8 +213,13 @@ export default function AreaCapture({ go, params }) {
                   <button className={'opt cumple' + (r.estado === 'cumple' ? ' sel' : '')} onClick={() => setEstado(l.id, 'cumple')}>✔ Cumple</button>
                   <button className={'opt no_cumple' + (r.estado === 'no_cumple' ? ' sel' : '')} onClick={() => setEstado(l.id, 'no_cumple')}>✘ No cumple</button>
                   <button className={'opt no_revisado' + ((!r.estado || r.estado === 'no_revisado') ? ' sel' : '')} onClick={() => setEstado(l.id, 'no_revisado')}>— No revisado</button>
-                  <label className={'opt foto-btn' + (fotosLin.length ? ' con-foto' : '')} title="Tomar foto para este punto">
+                  <button className={'opt foto-btn' + (fotosLin.length ? ' con-foto' : '')}
+                    onClick={() => setCamara({ linId: l.id, linTexto: l.texto })}
+                    title="Abrir cámara para este punto">
                     📷 Foto{fotosLin.length ? ` (${fotosLin.length})` : ''}
+                  </button>
+                  <label className="opt" style={{ fontSize: '.75rem' }} title="O subir desde archivo">
+                    📎
                     <input type="file" accept="image/*" capture="environment" multiple hidden onChange={e => onFotos(e, l.id, l.texto)} />
                   </label>
                 </div>
@@ -215,6 +245,7 @@ export default function AreaCapture({ go, params }) {
           {completo ? '✔ Guardar y regresar' : `Falta: ${lineamientos.length - evaluados} lineamiento(s) por evaluar${fotos.length < MIN_FOTOS ? ` y ${MIN_FOTOS - fotos.length} foto(s)` : ''}`}
         </button>
       </div>
+      {camara && <Camara onCaptura={onCapturaCamara} onClose={() => setCamara(null)} />}
     </>
   )
 }

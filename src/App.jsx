@@ -22,7 +22,7 @@ export default function App() {
   if (loading) return <div className="center"><p>Cargando…</p></div>
   if (!session) return <Login onLoggedIn={() => {}} />
 
-  const mfaCompleted = session.mfa?.assuranceLevel === 'AAL2' || session.mfa?.assuranceLevel === 'AAL1'
+  const mfaCompleted = (session.mfa?.assuranceLevel || '').toUpperCase() === 'AAL2'
   const go = (page, params = {}) => setRoute({ page, params })
 
   return (
