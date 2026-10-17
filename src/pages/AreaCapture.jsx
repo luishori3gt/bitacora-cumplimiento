@@ -6,13 +6,17 @@ import Lightbox from '../components/Lightbox.jsx'
 
 const MIN_FOTOS = 2
 
-async function comprimir(file, maxSide = 1600, quality = 0.82, sello = null) {
-  const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(file) })
+async function comprimir(src, maxSide = 1600, quality = 0.82, sello = null) {
+  // Acepta un File/Blob o una URL ya creada
+  const propia = typeof src !== 'string'
+  const url = propia ? URL.createObjectURL(src) : src
+  const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url })
   const scale = Math.min(1, maxSide / Math.max(img.width, img.height))
   const c = document.createElement('canvas')
   c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale)
   const ctx = c.getContext('2d')
   ctx.drawImage(img, 0, 0, c.width, c.height)
+  if (propia) URL.revokeObjectURL(url)
   if (sello) {
     // Fecha/hora y contexto QUEMADOS en la imagen (no removibles con visor)
     const fs = Math.max(18, Math.round(c.width / 28))
@@ -47,7 +51,7 @@ export default function AreaCapture({ go, params }) {
   const [msg, setMsg] = useState('')
   const [colaN, setColaN] = useState(0)
   const [camara, setCamara] = useState(null) // null | {linId, linTexto}
-  const [zoom, setZoom] = useState(null)
+  const [zoom, setZoom] = useState(null) // {urls:[], idx}
 
   const slug = useMemo(() => area.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'), [area])
 
@@ -97,9 +101,7 @@ export default function AreaCapture({ go, params }) {
   // Procesa una foto ya capturada (desde cámara o archivo): comprime, sella y encola
   async function procesarFoto(blob, linId = null, linTexto = null) {
     const sello = selloFoto(area.nombre, linTexto)
-    const urlObj = URL.createObjectURL(blob)
-    const comp = await comprimir(urlObj, 1200, 0.75, sello)
-    URL.revokeObjectURL(urlObj)
+    const comp = await comprimir(blob, 1200, 0.75, sello)
     const dataUrl = await new Promise((res, rej) => {
       const r = new FileReader()
       r.onload = () => res(r.result); r.onerror = rej
@@ -193,8 +195,9 @@ export default function AreaCapture({ go, params }) {
         )}
         {busy && <p>Subiendo…</p>}
         <div className="fotos-grid">
-          {fotos.filter(f => !f.lineamiento_id).map(f => (
-            <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }} onClick={() => setZoom(f.url)}>
+          {fotos.filter(f => !f.lineamiento_id).map((f, i) => (
+            <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }}
+              onClick={() => setZoom({ urls: fotos.filter(x => !x.lineamiento_id).map(x => x.url), idx: i })}>
               <img src={f.url} alt="evidencia general" loading="lazy" />
               <button onClick={ev => { ev.stopPropagation(); borrarFoto(f) }}>✕</button>
             </div>
@@ -227,8 +230,9 @@ export default function AreaCapture({ go, params }) {
                 </div>
                 {fotosLin.length > 0 && (
                   <div className="fotos-grid">
-                    {fotosLin.map(f => (
-                      <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }} onClick={() => setZoom(f.url)}>
+                    {fotosLin.map((f, i) => (
+                      <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }}
+                        onClick={() => setZoom({ urls: fotosLin.map(x => x.url), idx: i })}>
                         <img src={f.url} alt="evidencia" loading="lazy" />
                         <button onClick={ev => { ev.stopPropagation(); borrarFoto(f) }}>✕</button>
                       </div>
@@ -248,7 +252,7 @@ export default function AreaCapture({ go, params }) {
         </button>
       </div>
       {camara && <Camara onCaptura={onCapturaCamara} onClose={() => setCamara(null)} />}
-      <Lightbox src={zoom} onClose={() => setZoom(null)} />
+      <Lightbox srcs={zoom?.urls || []} index={zoom?.idx || 0} onIndex={i => setZoom(z => ({ ...z, idx: i }))} onClose={() => setZoom(null)} />
     </>
   )
 }

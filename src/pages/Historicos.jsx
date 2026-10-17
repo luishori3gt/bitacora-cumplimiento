@@ -13,7 +13,7 @@ export default function Historicos() {
   const [lineamientos, setLineamientos] = useState([])
   const [respuestas, setRespuestas] = useState({})
   const [fotos, setFotos] = useState([])
-  const [zoom, setZoom] = useState(null)
+  const [zoom, setZoom] = useState(null) // {urls:[], idx}
 
   useEffect(() => { (async () => {
     const { data: bs } = await supabase.from('bitacoras').select('id, fecha, estado').order('fecha', { ascending: false }).limit(180)
@@ -136,7 +136,8 @@ export default function Historicos() {
                         <div className="pill-row" style={{ marginTop: 4 }}><span className="badge pend">📷 Evidencia del punto</span></div>
                         <div className="fotos-grid">
                           {fotosLin.map(f => (
-                            <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }} onClick={() => setZoom(f.url)}>
+                            <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }}
+                              onClick={() => setZoom({ urls: fotosLin.map(x => x.url), idx: fotosLin.indexOf(f) })}>
                               <img src={f.url} alt="evidencia" loading="lazy" />
                             </div>
                           ))}
@@ -155,7 +156,8 @@ export default function Historicos() {
               <h3>📷 Fotos generales del área</h3>
               <div className="fotos-grid">
                 {fotos.filter(f => !f.lineamiento_id).map(f => (
-                  <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }} onClick={() => setZoom(f.url)}>
+                  <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }}
+                    onClick={() => setZoom({ urls: fotos.filter(x => !x.lineamiento_id).map(x => x.url), idx: fotos.filter(x => !x.lineamiento_id).indexOf(f) })}>
                     <img src={f.url} alt="evidencia general" loading="lazy" />
                   </div>
                 ))}
@@ -166,7 +168,7 @@ export default function Historicos() {
       )}
 
       {!sel && <div className="card"><p>Selecciona una fecha para ver lo evaluado y sus evidencias.</p></div>}
-      <Lightbox src={zoom} onClose={() => setZoom(null)} />
+      <Lightbox srcs={zoom?.urls || []} index={zoom?.idx || 0} onIndex={i => setZoom(z => ({ ...z, idx: i }))} onClose={() => setZoom(null)} />
     </>
   )
 }
