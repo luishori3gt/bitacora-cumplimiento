@@ -48,6 +48,7 @@ export default function AreaCapture({ go, params }) {
   const slug = useMemo(() => area.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'), [area])
 
   useEffect(() => {
+    load() // cargar lineamientos/respuestas/fotos al entrar al área
     setColaN(colaTam())
     const un = onQueueChange(() => { setColaN(colaTam()); load() })
     const alVolver = () => flushCola()
@@ -55,7 +56,8 @@ export default function AreaCapture({ go, params }) {
     const t = setInterval(() => { if (colaTam() > 0) flushCola() }, 30000)
     flushCola()
     return () => { un(); window.removeEventListener('online', alVolver); clearInterval(t) }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [area.id, bitacoraId])
 
   async function load() {
     const [{ data: lins }, { data: resp }, { data: fts }] = await Promise.all([
