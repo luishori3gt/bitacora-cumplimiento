@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase.js'
+import InstalarApp from '../components/InstalarApp.jsx'
 
 function hoy() { return new Date().toISOString().slice(0, 10) }
 
@@ -36,7 +37,8 @@ export default function Home({ go }) {
 
   async function iniciar() {
     setBusy(true); setMsg('')
-    const { data, error } = await supabase.from('bitacoras').insert({ fecha: hoy() }).select().single()
+    const { data: { user } } = await supabase.auth.getUser()
+    const { data, error } = await supabase.from('bitacoras').insert({ fecha: hoy(), usuario_email: user?.email || null }).select().single()
     setBusy(false)
     if (error) { setMsg('No se pudo iniciar: ' + error.message); return }
     // Pre-crear respuestas en 'no_revisado' para todos los lineamientos
@@ -60,6 +62,7 @@ export default function Home({ go }) {
 
   return (
     <>
+      <InstalarApp />
       <div className="card">
         <h2>Bitácora del día — {new Date().toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h2>
         <p style={{ color: 'var(--gray)', marginTop: -6 }}>La fecha se asigna automáticamente al iniciar la actividad.</p>
@@ -69,6 +72,7 @@ export default function Home({ go }) {
         ) : (
           <div className="pill-row">
             <span className="badge ok">Bitácora abierta · {bitacora.fecha}</span>
+            {bitacora.usuario_email && <span className="badge pend">👤 Iniciada por: {bitacora.usuario_email}</span>}
             <span className={areasListas === totalAreas ? 'badge ok' : 'badge pend'}>Áreas completas: {areasListas}/{totalAreas}</span>
             {bitacora.estado === 'abierta' && <button className="btn small danger" onClick={cerrar} disabled={busy}>🔒 Cerrar bitácora del día</button>}
             {bitacora.estado === 'cerrada' && <span className="badge ok">🔒 CERRADA</span>}

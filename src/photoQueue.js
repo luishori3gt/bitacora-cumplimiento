@@ -53,7 +53,8 @@ export async function flushCola() {
           area_id: item.areaId,
           lineamiento_id: item.linId,
           url,
-          public_id: item.publicId
+          public_id: item.publicId,
+          usuario_email: item.usuarioEmail || null
         })
         if (error) throw error
       } catch (e) {

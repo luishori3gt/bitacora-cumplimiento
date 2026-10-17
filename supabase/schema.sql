@@ -63,6 +63,11 @@ create index if not exists idx_fotos_lineamiento on public.fotos(lineamiento_id)
 
 create index if not exists idx_fotos_bitacora_area on public.fotos(bitacora_id, area_id);
 
+-- Trazabilidad: quién hizo cada registro (compatible con bases ya creadas)
+alter table public.bitacoras  add column if not exists usuario_email text;
+alter table public.respuestas add column if not exists usuario_email text;
+alter table public.fotos      add column if not exists usuario_email text;
+
 -- ============================================================
 -- ROW LEVEL SECURITY
 -- ============================================================

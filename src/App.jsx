@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard.jsx'
 import Account from './pages/Account.jsx'
 import Historicos from './pages/Historicos.jsx'
 import StorageBar from './components/StorageBar.jsx'
+import BottomNav from './components/BottomNav.jsx'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -66,6 +67,7 @@ export default function App() {
         {route.page === 'historicos' && <Historicos />}
         {route.page === 'account' && <Account session={session} />}
       </main>
+      <BottomNav route={route} go={go} />
       <footer className="footer">Bitácora de Cumplimiento · Accel-VPC · v1.0</footer>
     </div>
   )

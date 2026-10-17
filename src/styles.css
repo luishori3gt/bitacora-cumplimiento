@@ -86,6 +86,44 @@ select { padding: 8px; border-radius: 8px; border: 1px solid var(--border); font
 .footer { text-align: center; color: var(--gray); font-size: .78rem; padding: 16px; }
 .classif-head { background: var(--teal-light); color: var(--teal-dark); padding: 6px 10px; border-radius: 8px; font-weight: 700; margin: 14px 0 8px; font-size: .9rem; }
 
+/* ===== Móvil ===== */
+.bottomnav { display: none; }
+.table-scroll { overflow-x: auto; }
+
+@media (max-width: 640px) {
+  /* navegación inferior tipo app; se ocultan los botones del header */
+  .topbar nav { display: none; }
+  .bottomnav {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--teal); z-index: 50; padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -2px 10px rgba(0,0,0,.15);
+  }
+  .bottomnav button {
+    flex: 1; background: transparent; color: #b6e2dd; border: 0; cursor: pointer;
+    padding: 8px 2px 10px; font-size: .68rem; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .bottomnav button.active { color: #fff; background: rgba(255,255,255,.12); }
+  main { padding: 10px 10px 90px; } /* espacio para la barra inferior */
+  .footer { padding-bottom: 90px; }
+
+  /* botones y controles táctiles grandes (16px evita el zoom de iOS) */
+  .opt { padding: 11px 14px; font-size: .92rem; }
+  .btn { padding: 12px 18px; font-size: 1rem; }
+  .btn.small { padding: 10px 14px; font-size: .88rem; }
+  textarea, input, select { font-size: 16px; }
+  textarea { min-height: 72px; }
+  .lin { padding: 14px; }
+  .foto-thumb { width: 110px; height: 110px; }
+  .grid-areas { gap: 8px; }
+  .area-btn { padding: 14px 12px; }
+  .card { padding: 14px 12px; border-radius: 10px; }
+  .brand { font-size: .95rem; }
+  .topbar { padding: 8px 10px; gap: 8px; }
+  .login-card { padding: 22px 18px; }
+  .filters { flex-direction: column; align-items: stretch; }
+  select { width: 100%; }
+}
+
 @media (max-width: 640px) {
   main { padding: 10px; }
   .grid-areas { grid-template-columns: 1fr 1fr; }

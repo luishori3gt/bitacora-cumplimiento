@@ -53,6 +53,7 @@ export default function AreaCapture({ go, params }) {
   const [colaN, setColaN] = useState(0)
   const [camara, setCamara] = useState(null) // null | {linId, linTexto}
   const [zoom, setZoom] = useState(null) // {urls:[], idx}
+  const [userEmail, setUserEmail] = useState('')
   const archivoRef = useRef(null) // input de archivos único, controlado por los botones
   const [archivoTarget, setArchivoTarget] = useState({ linId: null, linTexto: null })
 
@@ -77,6 +78,8 @@ export default function AreaCapture({ go, params }) {
   }, [area.id, bitacoraId])
 
   async function load() {
+    const { data: { user } } = await supabase.auth.getUser()
+    setUserEmail(user?.email || '')
     const [{ data: lins }, { data: resp }, { data: fts }] = await Promise.all([
       supabase.from('lineamientos').select('*').eq('area_id', area.id).order('orden'),
       supabase.from('respuestas').select('*, lineamientos(clasificacion, texto)').eq('bitacora_id', bitacoraId),
@@ -90,9 +93,13 @@ export default function AreaCapture({ go, params }) {
   }
 
   async function setEstado(linId, estado) {
-    setRespuestas(p => ({ ...p, [linId]: { ...p[linId], lineamiento_id: linId, estado } }))
+    setRespuestas(p => ({ ...p, [linId]: { ...p[linId], lineamiento_id: linId, estado, usuario_email: userEmail, updated_at: new Date().toISOString() } }))
     await supabase.from('respuestas').upsert(
-      { bitacora_id: bitacoraId, lineamiento_id: linId, estado, actualizado_por: (await supabase.auth.getUser()).data.user.id },
+      {
+        bitacora_id: bitacoraId, lineamiento_id: linId, estado,
+        usuario_email: userEmail, updated_at: new Date().toISOString(),
+        actualizado_por: (await supabase.auth.getUser()).data.user.id
+      },
       { onConflict: 'bitacora_id,lineamiento_id' }
     )
   }
@@ -102,7 +109,7 @@ export default function AreaCapture({ go, params }) {
     setComentario._t = setComentario._t || {}
     setComentario._t[linId] = setTimeout(() =>
       supabase.from('respuestas').upsert(
-        { bitacora_id: bitacoraId, lineamiento_id: linId, comentario },
+        { bitacora_id: bitacoraId, lineamiento_id: linId, comentario, usuario_email: userEmail },
         { onConflict: 'bitacora_id,lineamiento_id' }
       ), 600)
   }
@@ -116,7 +123,7 @@ export default function AreaCapture({ go, params }) {
       r.onload = () => res(r.result); r.onerror = rej
       r.readAsDataURL(comp)
     })
-    encolarFoto({ dataUrl, bitacoraId, areaId: area.id, linId, areaSlug: slug })
+    encolarFoto({ dataUrl, bitacoraId, areaId: area.id, linId, areaSlug: slug, usuarioEmail: userEmail })
   }
 
   async function onArchivos(e) {
@@ -236,6 +243,11 @@ export default function AreaCapture({ go, params }) {
                     📎 Archivo
                   </button>
                 </div>
+                {(r.usuario_email || r.updated_at) && (
+                  <div style={{ fontSize: '.72rem', color: 'var(--gray)', marginTop: 4 }}>
+                    👤 {r.usuario_email || '—'}{r.updated_at ? ` · ${new Date(r.updated_at).toLocaleString('es-MX')}` : ''}
+                  </div>
+                )}
                 {fotosLin.length > 0 && (
                   <div className="fotos-grid">
                     {fotosLin.map((f, i) => (

@@ -43,7 +43,7 @@ export default function Historicos() {
     ;(async () => {
       const [{ data: lins }, { data: resp }, { data: fts }] = await Promise.all([
         supabase.from('lineamientos').select('*').eq('area_id', selArea.id).order('orden'),
-        supabase.from('respuestas').select('lineamiento_id, estado, comentario').eq('bitacora_id', sel),
+        supabase.from('respuestas').select('lineamiento_id, estado, comentario, usuario_email, updated_at').eq('bitacora_id', sel),
         supabase.from('fotos').select('*').eq('bitacora_id', sel).eq('area_id', selArea.id).order('created_at')
       ])
       setLineamientos(lins || [])
@@ -131,9 +131,19 @@ export default function Historicos() {
                         💬 {r.comentario}
                       </div>
                     )}
+                    {(r.usuario_email || r.updated_at) && (
+                      <div style={{ fontSize: '.72rem', color: 'var(--gray)', marginTop: 4 }}>
+                        👤 Evaluó: {r.usuario_email || '—'}{r.updated_at ? ` · ${new Date(r.updated_at).toLocaleString('es-MX')}` : ''}
+                      </div>
+                    )}
                     {fotosLin.length > 0 && (
                       <>
-                        <div className="pill-row" style={{ marginTop: 4 }}><span className="badge pend">📷 Evidencia del punto</span></div>
+                        <div className="pill-row" style={{ marginTop: 4 }}>
+                          <span className="badge pend">📷 Evidencia del punto</span>
+                          {fotosLin.some(f => f.usuario_email) && (
+                            <span className="badge pend">👤 {fotosLin.find(f => f.usuario_email)?.usuario_email}</span>
+                          )}
+                        </div>
                         <div className="fotos-grid">
                           {fotosLin.map(f => (
                             <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }}
