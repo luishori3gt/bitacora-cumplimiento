@@ -11,18 +11,26 @@ import StorageBar from './components/StorageBar.jsx'
 export default function App() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [tiene2FA, setTiene2FA] = useState(null) // null = desconocido
   const [route, setRoute] = useState({ page: 'home', params: {} })
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => { setSession(data.session); setLoading(false) })
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s))
+    supabase.auth.getSession().then(async ({ data }) => {
+      setSession(data.session)
+      if (data.session) {
+        const { data: f } = await supabase.auth.mfa.listFactors()
+        setTiene2FA((f?.totp || []).some(x => x.status === 'verified'))
+      }
+      setLoading(false)
+    })
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => { setSession(s); if (!s) setTiene2FA(null) })
     return () => sub.subscription.unsubscribe()
   }, [])
 
   if (loading) return <div className="center"><p>Cargando…</p></div>
   if (!session) return <Login onLoggedIn={() => {}} />
 
-  const mfaCompleted = (session.mfa?.assuranceLevel || '').toUpperCase() === 'AAL2'
+  const aal2 = (session.mfa?.assuranceLevel || '').toUpperCase() === 'AAL2'
   const go = (page, params = {}) => setRoute({ page, params })
 
   return (
@@ -41,8 +49,11 @@ export default function App() {
           <button className="nav-btn" onClick={() => supabase.auth.signOut()}>Salir</button>
         </div>
       </header>
-      {mfaCompleted === false && (
-        <div className="banner-warn">⚠️ Verifica tu segundo factor (2FA) para continuar. Ve a <b>Cuenta / 2FA</b>.</div>
+      {aal2 === false && tiene2FA === false && (
+        <div className="banner-warn">🔐 Por política de TI debes activar tu <b>verificación en 2 pasos</b>. Ve a <b>Cuenta / 2FA</b> y escanea el código QR con tu celular.</div>
+      )}
+      {aal2 === false && tiene2FA === true && (
+        <div className="banner-warn">🔐 Tu 2FA ya está activo. <b>Cierra sesión y vuelve a entrar</b> con tu contraseña + el código de 6 dígitos para verificar este dispositivo.</div>
       )}
       {IS_DEMO && (
         <div className="banner-warn">🧪 <b>Modo demostración</b> — datos simulados en este navegador. Configura el archivo .env para conectar Supabase y Cloudinary en producción.</div>

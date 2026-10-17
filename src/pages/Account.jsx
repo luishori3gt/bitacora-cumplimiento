@@ -43,8 +43,9 @@ export default function Account({ session }) {
     if (chall.error) { setErr(chall.error.message); return }
     const { error } = await supabase.auth.mfa.verify({ factorId: enroll.id, challengeId: chall.data.id, code: code.replace(/\s/g, '') })
     if (error) { setErr('Código incorrecto, intenta de nuevo.'); return }
-    setMsg('✅ 2FA activado. A partir de ahora se te pedirá el código en cada inicio de sesión.')
+    setMsg('✅ 2FA activado. Por seguridad, cerraremos sesión en unos segundos: vuelve a entrar con tu contraseña y el código de 6 dígitos.')
     setEnroll(null); setCode(''); load()
+    setTimeout(() => supabase.auth.signOut(), 4000)
   }
 
   async function quitar(id) {
