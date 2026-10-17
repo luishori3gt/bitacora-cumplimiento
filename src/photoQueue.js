@@ -59,7 +59,7 @@ export async function flushCola() {
         if (error) throw error
       } catch (e) {
         console.warn('Foto en cola: reintento pendiente', e?.message || e)
-        restantes.push({ ...item, intentos: (item.intentos || 0) + 1 })
+        restantes.push({ ...item, intentos: (item.intentos || 0) + 1, ultimoError: String(e?.message || e).slice(0, 160) })
       }
     }
     save(restantes)

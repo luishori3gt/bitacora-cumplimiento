@@ -208,6 +208,14 @@ export default function AreaCapture({ go, params }) {
             <button className="btn small secondary" onClick={async () => { setBusy(true); await flushCola(); await load(); setBusy(false) }}>Reintentar ahora</button>
           </div>
         )}
+        {(() => {
+          try {
+            const q = JSON.parse(localStorage.getItem('bitacora_foto_cola_v1')) || []
+            const conError = q.find(x => x.ultimoError)
+            if (conError) return <div className="error-msg" style={{ marginTop: 6, fontSize: '.78rem' }}>Motivo del último fallo: {conError.ultimoError}</div>
+          } catch { /* noop */ }
+          return null
+        })()}
         {busy && <p>Subiendo…</p>}
         <div className="fotos-grid">
           {fotos.filter(f => !f.lineamiento_id).map((f, i) => (
