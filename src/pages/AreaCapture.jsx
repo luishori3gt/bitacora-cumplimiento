@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { supabase, CLOUDINARY, IS_DEMO } from '../supabase.js'
 import { encolarFoto, flushCola, colaTam, onQueueChange } from '../photoQueue.js'
 import Camara from '../components/Camara.jsx'
+import Lightbox from '../components/Lightbox.jsx'
 
 const MIN_FOTOS = 2
 
@@ -46,6 +47,7 @@ export default function AreaCapture({ go, params }) {
   const [msg, setMsg] = useState('')
   const [colaN, setColaN] = useState(0)
   const [camara, setCamara] = useState(null) // null | {linId, linTexto}
+  const [zoom, setZoom] = useState(null)
 
   const slug = useMemo(() => area.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'), [area])
 
@@ -192,9 +194,9 @@ export default function AreaCapture({ go, params }) {
         {busy && <p>Subiendo…</p>}
         <div className="fotos-grid">
           {fotos.filter(f => !f.lineamiento_id).map(f => (
-            <div key={f.id} className="foto-thumb">
-              <img src={f.url} alt="evidencia" loading="lazy" />
-              <button onClick={() => borrarFoto(f)}>✕</button>
+            <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }} onClick={() => setZoom(f.url)}>
+              <img src={f.url} alt="evidencia general" loading="lazy" />
+              <button onClick={ev => { ev.stopPropagation(); borrarFoto(f) }}>✕</button>
             </div>
           ))}
         </div>
@@ -226,9 +228,9 @@ export default function AreaCapture({ go, params }) {
                 {fotosLin.length > 0 && (
                   <div className="fotos-grid">
                     {fotosLin.map(f => (
-                      <div key={f.id} className="foto-thumb">
+                      <div key={f.id} className="foto-thumb" style={{ cursor: 'zoom-in' }} onClick={() => setZoom(f.url)}>
                         <img src={f.url} alt="evidencia" loading="lazy" />
-                        <button onClick={() => borrarFoto(f)}>✕</button>
+                        <button onClick={ev => { ev.stopPropagation(); borrarFoto(f) }}>✕</button>
                       </div>
                     ))}
                   </div>
@@ -246,6 +248,7 @@ export default function AreaCapture({ go, params }) {
         </button>
       </div>
       {camara && <Camara onCaptura={onCapturaCamara} onClose={() => setCamara(null)} />}
+      <Lightbox src={zoom} onClose={() => setZoom(null)} />
     </>
   )
 }
