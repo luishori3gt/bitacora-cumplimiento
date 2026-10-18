@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { supabase } from '../supabase.js'
 import Lightbox from '../components/Lightbox.jsx'
+import { abrirReporte } from '../reporte.js'
 
 const ESTADO_BADGE = { cumple: 'ok', no_cumple: 'blocked', no_revisado: 'pend' }
 const ESTADO_TXT = { cumple: '✔ Cumple', no_cumple: '✘ No cumple', no_revisado: '— No revisado' }
@@ -14,6 +15,9 @@ export default function Historicos() {
   const [respuestas, setRespuestas] = useState({})
   const [fotos, setFotos] = useState([])
   const [zoom, setZoom] = useState(null) // {urls:[], idx}
+  const [fArea, setFArea] = useState('')
+  const [fEstado, setFEstado] = useState('')
+  const [fUsuario, setFUsuario] = useState('')
 
   useEffect(() => { (async () => {
     const { data: bs } = await supabase.from('bitacoras').select('id, fecha, estado').order('fecha', { ascending: false }).limit(180)
@@ -55,10 +59,21 @@ export default function Historicos() {
   }, [sel, selArea])
 
   const porClasif = useMemo(() => {
+    let lins = lineamientos
+    if (fArea) lins = lins // filtro de área ya se aplica al elegir el área
     const g = {}
-    for (const l of lineamientos) (g[l.clasificacion] = g[l.clasificacion] || []).push(l)
+    for (const l of lins) {
+      const r = respuestas[l.id] || {}
+      if (fEstado && (r.estado || 'no_revisado') !== fEstado) continue
+      if (fUsuario && (r.usuario_email || '') !== fUsuario) continue
+      ;(g[l.clasificacion] = g[l.clasificacion] || []).push(l)
+    }
     return g
-  }, [lineamientos])
+  }, [lineamientos, respuestas, fEstado, fUsuario])
+
+  const usuarios = useMemo(() => {
+    return [...new Set(Object.values(respuestas).map(r => r.usuario_email).filter(Boolean))]
+  }, [respuestas])
 
   const bitacora = bitacoras.find(b => b.id === sel)
 
@@ -74,8 +89,29 @@ export default function Historicos() {
               {bitacoras.map(b => <option key={b.id} value={b.id}>{b.fecha} {b.estado === 'cerrada' ? '🔒' : '(abierta)'}</option>)}
             </select>
           </div>
-          {selArea && (
+        {selArea && (
             <button className="btn secondary small" onClick={() => setSelArea(null)}>← Todas las áreas</button>
+          )}
+          {sel && (
+            <>
+              <div>
+                <label>Solo estado</label>
+                <select value={fEstado} onChange={e => setFEstado(e.target.value)}>
+                  <option value="">Todos</option>
+                  <option value="cumple">✔ Cumplen</option>
+                  <option value="no_cumple">✘ No cumplen</option>
+                  <option value="no_revisado">— No revisados</option>
+                </select>
+              </div>
+              <div>
+                <label>Evaluó</label>
+                <select value={fUsuario} onChange={e => setFUsuario(e.target.value)}>
+                  <option value="">Cualquiera</option>
+                  {usuarios.map(u => <option key={u} value={u}>{u}</option>)}
+                </select>
+              </div>
+              <button className="btn" onClick={() => abrirReporte(sel)}>📄 Reporte PDF del día</button>
+            </>
           )}
         </div>
         {bitacora && <div className="pill-row">

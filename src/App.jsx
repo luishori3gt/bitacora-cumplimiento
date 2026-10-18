@@ -8,6 +8,7 @@ import Account from './pages/Account.jsx'
 import Historicos from './pages/Historicos.jsx'
 import StorageBar from './components/StorageBar.jsx'
 import BottomNav from './components/BottomNav.jsx'
+import Acciones from './pages/Acciones.jsx'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -31,6 +32,21 @@ export default function App() {
   if (loading) return <div className="center"><p>Cargando…</p></div>
   if (!session) return <Login onLoggedIn={() => {}} />
 
+  // Recordatorio diario local
+  useEffect(() => {
+    const t = setInterval(() => {
+      const hora = localStorage.getItem('bitacora_recordatorio')
+      if (!hora || typeof Notification === 'undefined' || Notification.permission !== 'granted') return
+      const ahora = new Date().toTimeString().slice(0, 5)
+      const marcado = localStorage.getItem('bitacora_notif_' + new Date().toDateString())
+      if (ahora >= hora && !marcado) {
+        localStorage.setItem('bitacora_notif_' + new Date().toDateString(), '1')
+        new Notification('📋 Bitácora de Cumplimiento', { body: 'Recuerda realizar la bitácora del día.' })
+      }
+    }, 60000)
+    return () => clearInterval(t)
+  }, [])
+
   const aal2 = (session.mfa?.assuranceLevel || '').toUpperCase() === 'AAL2'
   const go = (page, params = {}) => setRoute({ page, params })
 
@@ -43,6 +59,7 @@ export default function App() {
         <nav>
           <button className={route.page === 'home' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('home')}>Bitácora</button>
           <button className={route.page === 'dashboard' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('dashboard')}>Indicadores</button>
+          <button className={route.page === 'acciones' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('acciones')}>✅ Acciones</button>
           <button className={route.page === 'historicos' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('historicos')}>🗂 Históricos</button>
           <button className={route.page === 'account' ? 'nav-btn active' : 'nav-btn'} onClick={() => go('account')}>Cuenta / 2FA</button>
         </nav>
@@ -64,6 +81,7 @@ export default function App() {
         {route.page === 'home' && <Home go={go} />}
         {route.page === 'area' && <AreaCapture go={go} params={route.params} />}
         {route.page === 'dashboard' && <Dashboard />}
+        {route.page === 'acciones' && <Acciones />}
         {route.page === 'historicos' && <Historicos />}
         {route.page === 'account' && <Account session={session} />}
       </main>

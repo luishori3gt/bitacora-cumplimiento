@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase.js'
+import { pctPonderado } from '../severidad.js'
+import { exportarHistoricoCSV } from '../reporte.js'
 
 export default function Dashboard() {
   const [rows, setRows] = useState([])
@@ -23,18 +25,32 @@ export default function Dashboard() {
 
   const filtradas = sel === 'todas' ? rows : rows.filter(r => r.bitacora_id === sel)
 
+  // Tendencia por día (ponderado)
+  const porDia = (() => {
+    const g = {}
+    for (const r of filtradas) {
+      const k = r.fecha
+      g[k] = g[k] || { fecha: k, rows: [] }
+      g[k].rows.push(r)
+    }
+    return Object.values(g).map(x => ({ fecha: x.fecha, pct: pctPonderado(x.rows) })).sort((a, b) => a.fecha.localeCompare(b.fecha))
+  })()
+  const ultima = porDia[porDia.length - 1]
+  const previa = porDia[porDia.length - 2]
+
   // Agregado por área
   const porArea = (() => {
     const g = {}
     for (const r of filtradas) {
       const k = r.area
-      g[k] = g[k] || { area: r.area, cumple: 0, evald: 0, fotos: 0, fechas: new Set() }
+      g[k] = g[k] || { area: r.area, cumple: 0, evald: 0, fotos: 0, fechas: new Set(), rows: [] }
+      g[k].rows.push(r)
       g[k].cumple += Number(r.cumple)
       g[k].evald += Number(r.cumple) + Number(r.no_cumple)
       g[k].fotos += Number(r.num_fotos)
       g[k].fechas.add(r.fecha)
     }
-    return Object.values(g).map(x => ({ ...x, pct: x.evald ? Math.round((x.cumple / x.evald) * 100) : 0, dias: x.fechas.size }))
+    return Object.values(g).map(x => ({ ...x, pct: x.evald ? Math.round((x.cumple / x.evald) * 100) : 0, pctw: pctPonderado(x.rows), dias: x.fechas.size }))
       .sort((a, b) => a.area.localeCompare(b.area))
   })()
 
@@ -51,7 +67,7 @@ export default function Dashboard() {
   })()
 
   const total = porArea.reduce((s, a) => ({ cumple: s.cumple + a.cumple, evald: s.evald + a.evald }), { cumple: 0, evald: 0 })
-  const pctTotal = total.evald ? Math.round((total.cumple / total.evald) * 100) : 0
+  const pctTotal = pctPonderado(filtradas)
 
   // ===== Gráficas de seguimiento (menor cumplimiento primero) =====
   const peoresAreas = porArea.filter(a => a.evald > 0).sort((a, b) => a.pct - b.pct)
@@ -67,7 +83,7 @@ export default function Dashboard() {
       <div className="card">
         <h3>{titulo}</h3>
         {items.map((it, i) => {
-          const pct = it.pct_cumplimiento ?? it.pct
+          const pct = it.pctw ?? it.pct_cumplimiento ?? it.pct
           return (
             <div key={i} style={{ marginBottom: 10 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, fontSize: '.85rem' }}>
@@ -107,9 +123,28 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="pill-row">
-          <span className="badge ok" style={{ fontSize: '1rem' }}>Cumplimiento total: {pctTotal}%</span>
+          <span className="badge ok" style={{ fontSize: '1rem' }}>Cumplimiento ponderado: {pctTotal}%</span>
           <span className="badge pend">Evaluados: {total.cumple}/{total.evald} cumplen</span>
+          <button className="btn small" onClick={exportarHistoricoCSV}>📥 Exportar Excel (CSV)</button>
         </div>
+        {porDia.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <b style={{ fontSize: '.9rem' }}>📈 Tendencia por día</b>
+            {previa && ultima && (
+              <span className="badge" style={{ marginLeft: 8, background: ultima.pct >= previa.pct ? '#dcfce7' : '#fee2e2', color: ultima.pct >= previa.pct ? '#166534' : '#991b1b' }}>
+                {ultima.pct >= previa.pct ? '▲' : '▼'} {Math.abs(ultima.pct - previa.pct)} pts vs día anterior
+              </span>
+            )}
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 90, marginTop: 8, overflowX: 'auto' }}>
+              {porDia.map(d => (
+                <div key={d.fecha} style={{ textAlign: 'center', minWidth: 34 }}>
+                  <div style={{ height: `${Math.max(4, d.pct)}px`, width: 22, background: color(d.pct), borderRadius: '4px 4px 0 0', margin: '0 auto' }} title={`${d.fecha}: ${d.pct}%`} />
+                  <div style={{ fontSize: '.58rem', color: 'var(--gray)' }}>{d.fecha.slice(5)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {vista === 'area' ? (
@@ -125,8 +160,8 @@ export default function Dashboard() {
                   <td className="num">{a.cumple}</td>
                   <td className="num">{a.evald}</td>
                   <td className="bar-cell">
-                    <div className="progress"><div style={{ width: `${a.pct}%`, background: color(a.pct) }} /></div>
-                    <b style={{ color: color(a.pct) }}>{a.pct}%</b>
+                    <div className="progress"><div style={{ width: `${a.pctw ?? a.pct}%`, background: color(a.pctw ?? a.pct) }} /></div>
+                    <b style={{ color: color(a.pctw ?? a.pct) }}>{a.pctw ?? a.pct}%</b>
                   </td>
                 </tr>
               ))}
@@ -161,7 +196,7 @@ export default function Dashboard() {
       )}
 
       <h2 style={{ margin: '8px 4px' }}>📉 Seguimiento — lo que más urge corregir</h2>
-      <Grafica titulo="🔴 Áreas con menor cumplimiento" items={peoresAreas.map(a => ({ etiqueta: a.area, pct: a.pct, cumple: a.cumple, evald: a.evald }))} />
+      <Grafica titulo="🔴 Áreas con menor cumplimiento" items={peoresAreas.map(a => ({ etiqueta: a.area, pct: a.pctw ?? a.pct, cumple: a.cumple, evald: a.evald }))} />
       <Grafica titulo="🟠 Clasificaciones con menor cumplimiento" items={peoresClasif.map(c => ({ etiqueta: c.clasificacion, detalle: c.area, pct: c.pct, cumple: c.cumple, evald: c.evald }))} />
       <Grafica titulo="⚪ Lineamientos (subpuntos) con menor cumplimiento — top 10" items={peoresLineamientos.map(s => ({ etiqueta: s.lineamiento, detalle: `${s.area} · ${s.clasificacion}`, pct: s.pct_cumplimiento, cumple: s.cumple, evald: s.evaluados }))} />
     </>

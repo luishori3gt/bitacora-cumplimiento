@@ -4,6 +4,7 @@ import React from 'react'
 export default function BottomNav({ route, go }) {
   const items = [
     { page: 'home', icono: '📋', texto: 'Bitácora' },
+    { page: 'acciones', icono: '✅', texto: 'Acciones' },
     { page: 'dashboard', icono: '📊', texto: 'Indicadores' },
     { page: 'historicos', icono: '🗂', texto: 'Históricos' },
     { page: 'account', icono: '🔐', texto: 'Cuenta' }

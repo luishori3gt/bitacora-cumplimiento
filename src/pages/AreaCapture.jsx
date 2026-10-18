@@ -34,12 +34,22 @@ async function comprimir(src, maxSide = 1600, quality = 0.82, sello = null) {
   return await new Promise(res => c.toBlob(b => res(b), 'image/jpeg', quality))
 }
 
-function selloFoto(areaNombre, linTexto) {
+function obtenerGPS() {
+  return new Promise(res => {
+    if (!navigator.geolocation) return res(null)
+    navigator.geolocation.getCurrentPosition(
+      p => res(`GPS: ${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)}`),
+      () => res(null), { timeout: 4000, maximumAge: 60000 }
+    )
+  })
+}
+
+async function selloFoto(areaNombre, linTexto) {
   const f = new Date()
   const p = n => String(n).padStart(2, '0')
   const fecha = `${f.getFullYear()}-${p(f.getMonth() + 1)}-${p(f.getDate())}`
   const hora = `${p(f.getHours())}:${p(f.getMinutes())}:${p(f.getSeconds())}`
-  return [`${fecha} ${hora}`, `Área: ${areaNombre}`, linTexto ? `Punto: ${linTexto.slice(0, 60)}` : null]
+  return [`${fecha} ${hora}`, `Área: ${areaNombre}`, linTexto ? `Punto: ${linTexto.slice(0, 60)}` : null, await obtenerGPS()]
 }
 
 export default function AreaCapture({ go, params }) {
@@ -92,7 +102,7 @@ export default function AreaCapture({ go, params }) {
     setFotos(fts || [])
   }
 
-  async function setEstado(linId, estado) {
+  async function setEstado(linId, estado, lin = null) {
     setRespuestas(p => ({ ...p, [linId]: { ...p[linId], lineamiento_id: linId, estado, usuario_email: userEmail, updated_at: new Date().toISOString() } }))
     await supabase.from('respuestas').upsert(
       {
@@ -102,6 +112,24 @@ export default function AreaCapture({ go, params }) {
       },
       { onConflict: 'bitacora_id,lineamiento_id' }
     )
+    // Acción correctiva automática al marcar "No cumple"
+    if (estado === 'no_cumple') {
+      const sev = lin?.severidad || 'mayor'
+      const resp2 = prompt(
+        `Acción correctiva por "No cumple":\n${lin ? lin.texto + '\n\n' : ''}¿Quién es el responsable de corregirlo?`,
+        userEmail
+      )
+      if (resp2 !== null) {
+        const limite = prompt('Fecha límite (AAAA-MM-DD):', new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10))
+        await supabase.from('acciones').insert({
+          bitacora_id: bitacoraId, area_id: area.id, lineamiento_id: linId,
+          descripcion: (lin ? lin.texto : 'Hallazgo') + (resp2.trim() ? '' : ''),
+          severidad: sev, responsable: resp2.trim() || userEmail,
+          fecha_limite: limite || null, usuario_email: userEmail
+        })
+        setMsg('✅ Hallazgo registrado y acción correctiva creada (ver pestaña ✅ Acciones).')
+      }
+    }
   }
   async function setComentario(linId, comentario) {
     setRespuestas(p => ({ ...p, [linId]: { ...p[linId], lineamiento_id: linId, comentario } }))
@@ -116,7 +144,7 @@ export default function AreaCapture({ go, params }) {
 
   // Procesa una foto ya capturada (desde cámara o archivo): comprime, sella y encola
   async function procesarFoto(blob, linId = null, linTexto = null) {
-    const sello = selloFoto(area.nombre, linTexto)
+    const sello = await selloFoto(area.nombre, linTexto)
     const comp = await comprimir(blob, 1200, 0.75, sello)
     const dataUrl = await new Promise((res, rej) => {
       const r = new FileReader()
@@ -239,7 +267,7 @@ export default function AreaCapture({ go, params }) {
                 <div className="texto">{l.texto}</div>
                 <div className="opts">
                   <button className={'opt cumple' + (r.estado === 'cumple' ? ' sel' : '')} onClick={() => setEstado(l.id, 'cumple')}>✔ Cumple</button>
-                  <button className={'opt no_cumple' + (r.estado === 'no_cumple' ? ' sel' : '')} onClick={() => setEstado(l.id, 'no_cumple')}>✘ No cumple</button>
+                  <button className={'opt no_cumple' + (r.estado === 'no_cumple' ? ' sel' : '')} onClick={() => setEstado(l.id, 'no_cumple', l)}>✘ No cumple</button>
                   <button className={'opt no_revisado' + ((!r.estado || r.estado === 'no_revisado') ? ' sel' : '')} onClick={() => setEstado(l.id, 'no_revisado')}>— No revisado</button>
                   <button className={'opt foto-btn' + (fotosLin.length ? ' con-foto' : '')}
                     onClick={() => setCamara({ linId: l.id, linTexto: l.texto })}

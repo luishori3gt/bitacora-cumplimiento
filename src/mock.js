@@ -3,8 +3,9 @@
 // probar toda la app sin configurar nada.
 
 import catalogo from './catalogo.json'
+import { severidadPorClasificacion, PESOS } from './severidad.js'
 
-const KEY = 'bitacora_demo_db_v4'
+const KEY = 'bitacora_demo_db_v5'
 
 function db() {
   try { return JSON.parse(localStorage.getItem(KEY)) } catch { return null }
@@ -17,12 +18,13 @@ function fresh() {
   catalogo.forEach((a, i) => {
     const ls = a.items.map((it, j) => ({
       id: `l-${i}-${j}`, area_id: 'area-' + i,
-      clasificacion: it.clasificacion, texto: it.lineamiento, orden: j
+      clasificacion: it.clasificacion, texto: it.lineamiento, orden: j,
+      severidad: severidadPorClasificacion(it.clasificacion)
     }))
     lineamientos.push(...ls)
     areas.push({ id: 'area-' + i, nombre: a.area, orden: i, lineamientos: ls })
   })
-  return { areas, lineamientos, bitacoras: [], respuestas: [], fotos: [], factors: [] }
+  return { areas, lineamientos, bitacoras: [], respuestas: [], fotos: [], acciones: [], factors: [] }
 }
 function get() { let d = db(); if (!d || !d.areas) { d = fresh(); save(d) } return d }
 
@@ -39,13 +41,31 @@ function vCalifs(d) {
         c[est]++
       }
       const nf = d.fotos.filter(f => f.bitacora_id === b.id && f.area_id === a.id).length
+      const linMap = {}
+      for (const l of a.lineamientos) linMap[l.id] = l
       for (const [clasificacion, c] of Object.entries(byClas)) {
         const evald = c.cumple + c.no_cumple
+        const rowsClas = Object.entries(byClas).length // noop
+        // ponderado por severidad dentro de esta clasificación
+        let num = 0, den = 0, critNC = 0
+        for (const l of a.lineamientos) {
+          if (l.clasificacion !== clasificacion) continue
+          const r = d.respuestas.find(x => x.bitacora_id === b.id && x.lineamiento_id === l.id)
+          const est = r?.estado || 'no_revisado'
+          if (est === 'cumple' || est === 'no_cumple') {
+            const p = PESOS[l.severidad] || 0.75
+            den += p
+            if (est === 'cumple') num += p
+            if (est === 'no_cumple' && l.severidad === 'critico') critNC++
+          }
+        }
         rows.push({
-          bitacora_id: b.id, fecha: b.fecha, estado_bitacora: b.estado,
+          bitacora_id: b.id, fecha: b.fecha, estado_bitacora: b.estado, sitio: b.sitio || 'Accel-VPC',
           area_id: a.id, area: a.nombre, clasificacion,
           total_lineamientos: c.total, cumple: c.cumple, no_cumple: c.no_cumple, no_revisado: c.no_revisado,
-          pct_cumplimiento: evald ? Math.round((c.cumple / evald) * 1000) / 10 : null,
+          criticos_no_cumple: critNC,
+          pct_ponderado: den ? Math.round((num / den) * 1000) / 10 : null,
+          pct_simple: evald ? Math.round((c.cumple / evald) * 1000) / 10 : null,
           num_fotos: nf
         })
       }
@@ -63,7 +83,7 @@ function vSeg(d) {
     const ev = cum + nc
     const a = d.areas.find(a => a.id === l.area_id)
     rows.push({
-      area: a?.nombre, clasificacion: l.clasificacion, lineamiento: l.texto,
+      area: a?.nombre, clasificacion: l.clasificacion, severidad: l.severidad, lineamiento: l.texto,
       cumple: cum, no_cumple: nc, evaluados: ev,
       pct_cumplimiento: ev ? Math.round((cum / ev) * 1000) / 10 : null
     })
