@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase.js'
 import { pctPonderado } from '../severidad.js'
-import { exportarHistoricoCSV } from '../reporte.js'
+import { exportarHistoricoCSV, abrirReportePeriodo } from '../reporte.js'
 
 export default function Dashboard() {
   const [rows, setRows] = useState([])
@@ -37,6 +37,24 @@ export default function Dashboard() {
   })()
   const ultima = porDia[porDia.length - 1]
   const previa = porDia[porDia.length - 2]
+
+  // Rangos para reportes periódicos
+  const hoyStr = new Date().toISOString().slice(0, 10)
+  const [ini, setIni] = useState(hoyStr)
+  const [fin, setFin] = useState(hoyStr)
+  function lunesDeEstaSemana() {
+    const d = new Date(); const dia = (d.getDay() + 6) % 7
+    d.setDate(d.getDate() - dia)
+    return d.toISOString().slice(0, 10)
+  }
+  function generarPeriodo(tipo) {
+    const f = new Date()
+    let i, fi, t
+    if (tipo === 'semana') { i = lunesDeEstaSemana(); fi = hoyStr; t = 'Semanal' }
+    else if (tipo === 'mes') { i = hoyStr.slice(0, 8) + '01'; fi = hoyStr; t = 'Mensual' }
+    else { i = ini; fi = fin; t = 'Personalizado' }
+    abrirReportePeriodo(i, fi, t)
+  }
 
   // Agregado por área
   const porArea = (() => {
@@ -126,6 +144,13 @@ export default function Dashboard() {
           <span className="badge ok" style={{ fontSize: '1rem' }}>Cumplimiento ponderado: {pctTotal}%</span>
           <span className="badge pend">Evaluados: {total.cumple}/{total.evald} cumplen</span>
           <button className="btn small" onClick={exportarHistoricoCSV}>📥 Exportar Excel (CSV)</button>
+          <button className="btn small" onClick={() => generarPeriodo('semana')}>📄 Reporte semanal</button>
+          <button className="btn small" onClick={() => generarPeriodo('mes')}>📄 Reporte mensual</button>
+        </div>
+        <div className="filters" style={{ marginBottom: 0 }}>
+          <div><label>Periodo personalizado — inicio</label><input type="date" value={ini} onChange={e => setIni(e.target.value)} /></div>
+          <div><label>fin</label><input type="date" value={fin} onChange={e => setFin(e.target.value)} /></div>
+          <button className="btn small secondary" onClick={() => generarPeriodo('custom')}>📄 Generar reporte del periodo</button>
         </div>
         {porDia.length > 0 && (
           <div style={{ marginTop: 14 }}>
