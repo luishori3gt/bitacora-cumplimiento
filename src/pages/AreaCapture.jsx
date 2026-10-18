@@ -112,10 +112,13 @@ export default function AreaCapture({ go, params }) {
       },
       { onConflict: 'bitacora_id,lineamiento_id' }
     )
-    // Acción correctiva automática al marcar "No cumple"
+    // Acción correctiva automática al marcar "No cumple" (sin duplicar)
     if (estado === 'no_cumple') {
-      const sev = lin?.severidad || 'mayor'
-      const resp2 = prompt(
+      const { data: yaExiste } = await supabase.from('acciones')
+        .select('id').eq('bitacora_id', bitacoraId).eq('lineamiento_id', linId).limit(1)
+      if (!yaExiste?.length) {
+        const sev = lin?.severidad || 'mayor'
+        const resp2 = prompt(
         `Acción correctiva por "No cumple":\n${lin ? lin.texto + '\n\n' : ''}¿Quién es el responsable de corregirlo?`,
         userEmail
       )
@@ -128,6 +131,7 @@ export default function AreaCapture({ go, params }) {
           fecha_limite: limite || null, usuario_email: userEmail
         })
         setMsg('✅ Hallazgo registrado y acción correctiva creada (ver pestaña ✅ Acciones).')
+      }
       }
     }
   }

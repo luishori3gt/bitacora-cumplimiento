@@ -152,8 +152,9 @@ export default function Home({ go }) {
             const s = stats[a.id] || {}
             const pct = s.pctw ?? s.pct
             return (
-              <button key={a.id} className="area-btn" disabled={!bitacora} onClick={() => go('area', { area: a, bitacoraId: bitacora?.id })}>
+              <button key={a.id} className="area-btn" disabled={!bitacora || bitacora.estado === 'cerrada'} onClick={() => go('area', { area: a, bitacoraId: bitacora?.id })}>
                 <strong>{a.nombre}</strong>
+                {bitacora?.estado === 'cerrada' && <span className="badge ok">🔒 cerrada</span>}
                 <div className="progress"><div style={{ width: `${pct ?? 0}%` }} /></div>
                 <div className="pill-row">
                   <span className="badge pend">{s.evald || 0}/{s.total} evaluados</span>

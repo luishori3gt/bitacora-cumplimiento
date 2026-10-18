@@ -9,6 +9,7 @@ import Historicos from './pages/Historicos.jsx'
 import StorageBar from './components/StorageBar.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import Acciones from './pages/Acciones.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -51,6 +52,7 @@ export default function App() {
   const go = (page, params = {}) => setRoute({ page, params })
 
   return (
+    <ErrorBoundary>
     <div className="app">
       <header className="topbar">
         <div className="brand" onClick={() => go('home')}>
@@ -88,5 +90,6 @@ export default function App() {
       <BottomNav route={route} go={go} />
       <footer className="footer">Bitácora de Cumplimiento · Accel-VPC · v1.0</footer>
     </div>
+    </ErrorBoundary>
   )
 }

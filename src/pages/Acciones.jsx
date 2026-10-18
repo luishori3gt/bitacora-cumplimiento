@@ -67,11 +67,11 @@ export default function Acciones() {
             <div className="filters" style={{ marginBottom: 0, marginTop: 8 }}>
               <div>
                 <label>Responsable</label>
-                <input type="text" value={a.responsable || ''} onChange={e => actualizar(a.id, 'responsable', e.target.value)} placeholder="¿Quién corrige?" />
+                <input type="text" defaultValue={a.responsable || ''} onBlur={e => { if (e.target.value !== (a.responsable || '')) actualizar(a.id, 'responsable', e.target.value) }} placeholder="¿Quién corrige?" />
               </div>
               <div>
                 <label>Fecha límite</label>
-                <input type="date" value={a.fecha_limite || ''} onChange={e => actualizar(a.id, 'fecha_limite', e.target.value)} />
+                <input type="date" defaultValue={a.fecha_limite || ''} onChange={e => actualizar(a.id, 'fecha_limite', e.target.value)} />
               </div>
               <div>
                 <label>Estatus</label>
