@@ -29,9 +29,6 @@ export default function App() {
     return () => sub.subscription.unsubscribe()
   }, [])
 
-  if (loading) return <div className="center"><p>Cargando…</p></div>
-  if (!session) return <Login onLoggedIn={() => {}} />
-
   // Recordatorio diario local
   useEffect(() => {
     const t = setInterval(() => {
@@ -46,6 +43,9 @@ export default function App() {
     }, 60000)
     return () => clearInterval(t)
   }, [])
+
+  if (loading) return <div className="center"><p>Cargando…</p></div>
+  if (!session) return <Login onLoggedIn={() => {}} />
 
   const aal2 = (session.mfa?.assuranceLevel || '').toUpperCase() === 'AAL2'
   const go = (page, params = {}) => setRoute({ page, params })
