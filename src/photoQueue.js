@@ -1,7 +1,7 @@
 // Cola de fotos offline: si no hay conexión, las fotos comprimidas y con sello
 // se guardan en el teléfono (localStorage) y se suben automáticamente al
 // regresar la señal (evento 'online', reintento cada 30 s o al abrir el área).
-import { supabase, CLOUDINARY, IS_DEMO } from './supabase.js'
+import { supabase, CLOUDINARY, IS_DEMO, IS_LOCAL } from './supabase.js'
 
 const KEY = 'bitacora_foto_cola_v1'
 let listeners = []
@@ -48,6 +48,7 @@ export async function flushCola() {
         const { data: b } = await supabase.from('bitacoras').select('estado').eq('id', item.bitacoraId).maybeSingle()
         if (!b || b.estado === 'cerrada') continue // se descarta (registro ya cerrado)
         const url = await subir(item)
+        if (url === null) continue // modo local: el servidor ya guardó archivo + registro
         const { error } = await supabase.from('fotos').insert({
           bitacora_id: item.bitacoraId,
           area_id: item.areaId,
@@ -69,6 +70,16 @@ export async function flushCola() {
 }
 
 async function subir(item) {
+  if (IS_LOCAL) {
+    // Servidor local: guarda el archivo en disco y registra la foto en un solo paso
+    const res = await fetch('/api/fotos/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...(tokLocal() ? { Authorization: 'Bearer ' + tokLocal() } : {}) },
+      body: JSON.stringify({ bitacoraId: item.bitacoraId, areaId: item.areaId, linId: item.linId, dataUrl: item.dataUrl })
+    })
+    if (!res.ok) throw new Error('Servidor local: ' + res.status + ' — ' + (await res.text()).slice(0, 120))
+    return null
+  }
   const blob = await (await fetch(item.dataUrl)).blob()
   if (IS_DEMO) {
     item.publicId = 'demo-' + Date.now()
@@ -82,4 +93,8 @@ async function subir(item) {
   const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY.cloudName}/image/upload`, { method: 'POST', body: fd })
   if (!r.ok) throw new Error('Cloudinary respondió ' + r.status)
   return (await r.json()).secure_url
+}
+
+function tokLocal() {
+  try { return JSON.parse(localStorage.getItem('bitacora_local_session'))?.token || null } catch { return null }
 }
